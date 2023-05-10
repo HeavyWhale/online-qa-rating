@@ -2,15 +2,20 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>医生评分</title>
+    <title>在线医患平台问答评分</title>
 </head>
 <body>
-    <h1>问题与回答</h1>
-    <p>问题：{{ question }}</p>
-    {% for answer in answers %}
-    <p>回答{{ loop.index }}：{{ answer }}</p>
-    {% endfor %}
+    <h1 style="background-color:powderblue;text-align:center;">在线医患平台问答评分</h1>
+    <hr>
 
+    <h2>问答文本</h2>
+    <p><b>患者问题：</b>{{ question }}</p>
+    {% for answer in answers %}
+    <p><b>在线医生回答{{ loop.index }}：</b>{{ answer }}</p>
+    {% endfor %}
+    <hr>
+
+    <h2>您的评分</h2>
     <form action="/submit" method="post">
         <input type="hidden" name="question" value="{{ question }}">
         {% for answer in answers %}
@@ -18,7 +23,8 @@
         {% endfor %}
         <div>
             {% for answer in answers %}
-            <label for="score{{ loop.index }}">评分回答{{ loop.index }}（1-5）：</label>
+            <p>
+            <label for="score{{ loop.index }}">回答{{ loop.index }}评分（1-5）：</label>
             <select id="score{{ loop.index }}" name="score{{ loop.index }}" required>
                 <option value="">请选择</option>
                 <option value="1">1</option>
@@ -27,7 +33,7 @@
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select>
-            <br>
+            </p>
             {% endfor %}
         </div>
         <button type="submit">提交评分</button>
