@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>医生评分</title>
+</head>
+<body>
+    <h1>问题与回答</h1>
+    <p>问题：{{ question }}</p>
+    {% for answer in answers %}
+    <p>回答{{ loop.index }}：{{ answer }}</p>
+    {% endfor %}
+
+    <form action="/submit" method="post">
+        <input type="hidden" name="question" value="{{ question }}">
+        {% for answer in answers %}
+        <input type="hidden" name="answer{{ loop.index }}" value="{{ answer }}">
+        {% endfor %}
+        <div>
+            {% for answer in answers %}
+            <label for="score{{ loop.index }}">评分回答{{ loop.index }}（1-5）：</label>
+            <input type="number" id="score{{ loop.index }}" name="score{{ loop.index }}" min="1" max="5" required>
+            {% endfor %}
+        </div>
+        <button type="submit">提交评分</button>
+    </form>
+</body>
+</html>
