@@ -4,7 +4,7 @@
 
 Run the following command in the root directory:
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Run Server and Test
