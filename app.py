@@ -6,10 +6,14 @@ app = Flask(__name__)
 # 读取Excel文档
 data = pd.read_csv('asthma_clean.csv')
 
+i = 0
+
 @app.route('/')
 def index():
-    # qa = data.iloc[[0]].to_dict(orient='records')[0]
-    qa = data.sample(1).to_dict(orient='records')[0]
+    global i
+    qa = data.iloc[[i]].to_dict(orient='records')[0]
+    i += 1
+    # qa = data.sample(1).to_dict(orient='records')[0]
     names = [qa['doc1'], qa['doc2'], qa['doc3']]
     infos = [qa['info1'], qa['info2'], qa['info3']]
     answers = [qa['ans1'], qa['ans2'], qa['ans3']]
@@ -35,7 +39,7 @@ def submit():
         data.loc[(data['question'] == question), f'score{i+1}'] = scores[i]
     data.to_csv('asthma_result.csv', index=False)
 
-    return 'Scores saved!', 200
+    return render_template('success.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
