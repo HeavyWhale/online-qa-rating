@@ -8,6 +8,9 @@ df = df.replace(
         '\t': '',
         '\xa0': '',
         '健康咨询描述：': '',
+        '病情分析：': '',
+        '指导意见：': '',
+        '处理意见：': '',
         '^\s+|\s+$': '', # 去掉 leading and trailing whitespaces
     },
     regex=True

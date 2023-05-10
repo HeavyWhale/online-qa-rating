@@ -8,7 +8,8 @@ data = pd.read_csv('asthma_clean.csv')
 
 @app.route('/')
 def index():
-    qa = data.iloc[[0]].to_dict(orient='records')[0]
+    # qa = data.iloc[[0]].to_dict(orient='records')[0]
+    qa = data.sample(1).to_dict(orient='records')[0]
     names = [qa['doc1'], qa['doc2'], qa['doc3']]
     infos = [qa['info1'], qa['info2'], qa['info3']]
     answers = [qa['ans1'], qa['ans2'], qa['ans3']]

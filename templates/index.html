@@ -19,7 +19,15 @@
         <div>
             {% for answer in answers %}
             <label for="score{{ loop.index }}">评分回答{{ loop.index }}（1-5）：</label>
-            <input type="number" id="score{{ loop.index }}" name="score{{ loop.index }}" min="1" max="5" required>
+            <select id="score{{ loop.index }}" name="score{{ loop.index }}" required>
+                <option value="">请选择</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <br>
             {% endfor %}
         </div>
         <button type="submit">提交评分</button>
