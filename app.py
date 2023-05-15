@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request
 import pandas as pd
+import os
 
 app = Flask(__name__)
 
-# 读取Excel文档
-data = pd.read_csv('asthma_clean.csv')
+FILE = "./data/diabetes_clean.csv"
+
+# 读取csv文档
+data = pd.read_csv(FILE)
 
 i = 0
 
@@ -34,10 +37,12 @@ def submit():
     question = request.form['question']
     answers = [request.form['answer1'], request.form['answer2'], request.form['answer3']]
 
-    # 将评分追加到Excel文档
+    # 将评分追加到csv文档
     for i, answer in enumerate(answers):
         data.loc[(data['question'] == question), f'score{i+1}'] = scores[i]
-    data.to_csv('asthma_result.csv', index=False)
+    global FILE
+    filename = FILE.split('_', 1)[0] + '_result.csv'
+    data.to_csv(filename, index=False)
 
     return render_template('success.html')
 
