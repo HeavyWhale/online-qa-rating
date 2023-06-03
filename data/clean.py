@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import sys
 
 def clean(filename: str):
     df = pd.read_excel(filename)
@@ -31,10 +32,22 @@ def clean(filename: str):
         axis=1
     )
     df = df[~mask]
-    deleted_indices = sorted(list(set(original_indices) - set(df.index)))
-    print('Deleted indices: ', end='')
-    for index in deleted_indices:
-        if index == deleted_indices[-1]:
+    deleted_indices_exclusion_keywords = sorted(list(set(original_indices) - set(df.index)))
+    
+    original_indices = df.index.tolist()
+    df = df.dropna()
+    deleted_indices_na_cells = sorted(list(set(original_indices) - set(df.index)))
+    
+    print('Deleted indices (exclusion keyword): ', end='')
+    for index in deleted_indices_exclusion_keywords:
+        if index == deleted_indices_exclusion_keywords[-1]:
+            print(f'#{index}')
+        else:
+            print(f'#{index}, ', end='')
+
+    print('Deleted indices (empty cell): ', end='')
+    for index in deleted_indices_na_cells:
+        if index == deleted_indices_na_cells[-1]:
             print(f'#{index}')
         else:
             print(f'#{index}, ', end='')
@@ -42,8 +55,20 @@ def clean(filename: str):
     df.to_csv(f'{filename_without_extension}_clean.csv', index=False)
 
 if __name__ == '__main__':
-    files = os.listdir(os.getcwd())
-    files = list(filter(lambda f: f.endswith('.xlsx'), files))
+    files = []
+
+    if len(sys.argv) <= 1:
+        files = os.listdir(os.getcwd())
+        files = list(filter(lambda f: f.endswith('.xlsx'), files))
+    else:
+        arg = ''.join(sys.argv[1])
+        if arg == 'clean':
+            print(f'> Cleaning all *.csv files ...')
+            os.system('rm *.csv')
+            exit(0)
+        if not arg.endswith('.xlsx'): arg += '.xlsx'
+        files.append(arg)
+
     for file in files:
         print(f'> Processing file {file} ...')
         clean(file)
