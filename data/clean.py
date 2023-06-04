@@ -38,14 +38,14 @@ def clean(filename: str):
     df = df.dropna()
     deleted_indices_na_cells = sorted(list(set(original_indices) - set(df.index)))
     
-    print('Deleted indices (exclusion keyword): ', end='')
+    print(f'Deleted indices (exclusion keyword, in total {len(deleted_indices_exclusion_keywords)}): ', end='')
     for index in deleted_indices_exclusion_keywords:
         if index == deleted_indices_exclusion_keywords[-1]:
             print(f'#{index}')
         else:
             print(f'#{index}, ', end='')
 
-    print('Deleted indices (empty cell): ', end='')
+    print(f'Deleted indices (empty cell, in total {len(deleted_indices_na_cells)}): ', end='')
     for index in deleted_indices_na_cells:
         if index == deleted_indices_na_cells[-1]:
             print(f'#{index}')
@@ -71,5 +71,8 @@ if __name__ == '__main__':
 
     for file in files:
         print(f'> Processing file {file} ...')
+        if file.startswith('~$'): 
+            print(f'> File {file} is a temporary file generated from Excel, skipping ... ')
+            continue
         clean(file)
         print()
