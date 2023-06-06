@@ -28,7 +28,7 @@ def main(args):
         files.append(filename)
     else:
         files = os.listdir(os.getcwd())
-        files = list(filter(lambda f: f.endswith('.xlsx'), files))
+        files = list(filter(lambda f: f.endswith('.xlsx') and f.find('_') == -1, files))
 
     for file in files:
         print(f'{color.YELLOW}> Processing file {file} ...{color.END}')
