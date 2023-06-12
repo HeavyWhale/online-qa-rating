@@ -46,7 +46,7 @@ def clean(filename: str, format: str):
         fun(f'{filename_without_extension}_{suffix}.{"csv" if is_csv else "xlsx"}', index=False)
 
     df = pd.read_excel(filename)
-    df.columns = ['title','question','doc1','info1','ans1','doc2','info2','ans2','doc3','info3','ans3']
+    df.columns = ['title','description','doc1','info1','ans1','doc2','info2','ans2','doc3','info3','ans3']
 
     replace_keywords = [
         '\n', '\t', '\xa0', 
@@ -60,10 +60,12 @@ def clean(filename: str, format: str):
         { keyword: '' for keyword in replace_keywords },
         regex=True
     )
+    df['category'] = filename_without_extension
+    
     df[['doc1', 'hosp1', 'pos1']] = df['doc1'].str.split(' ', n=2, expand=True)
     df[['doc2', 'hosp2', 'pos2']] = df['doc2'].str.split(' ', n=2, expand=True)
     df[['doc3', 'hosp3', 'pos3']] = df['doc3'].str.split(' ', n=2, expand=True)
-    df = df[['title','question','doc1','hosp1','pos1','info1','ans1','doc2','hosp2','pos2','info2','ans2','doc3','hosp3','pos3','info3','ans3']]
+    df = df[['category','title','description','doc1','hosp1','pos1','info1','ans1','doc2','hosp2','pos2','info2','ans2','doc3','hosp3','pos3','info3','ans3']]
     output(suffix="replaced")
 
     exclusion_keywords = [
