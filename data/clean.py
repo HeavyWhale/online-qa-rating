@@ -59,7 +59,7 @@ def clean(filename: str, format: str, onlyOutputFinalFile: bool):
                       'ans1','doc2','hosp2','pos2','info2','ans2','doc3',
                       'hosp3','pos3','info3','ans3']
     else:
-        df.columns = ['title','question','doc1','info1','ans1','doc2','info2','ans2','doc3','info3','ans3']
+        df.columns = ['title','description','doc1','info1','ans1','doc2','info2','ans2','doc3','info3','ans3']
         replace_keywords = [
             '\n', '\t', '\xa0', 
             '健康咨询描述：',
