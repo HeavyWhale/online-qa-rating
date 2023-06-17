@@ -157,7 +157,7 @@ if __name__ == '__main__':
     parser.add_argument(
         "-f", "--final",
         action="store_true",
-        help="the output format of cleaned up file(s)"
+        help="only output the final clean file"
     )
 
     main(parser.parse_args())
