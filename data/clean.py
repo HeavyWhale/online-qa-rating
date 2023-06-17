@@ -55,7 +55,7 @@ def clean(filename: str, format: str, onlyOutputFinalFile: bool):
     if df.columns.size == 18:
         print(f'{color.RED}> This file has been processed by this program, skipping some steps ... {color.END}', end='\n')
         is_processed = True
-        df.columns = ['isExcluded', 'title','question','doc1','hosp1','pos1','info1',
+        df.columns = ['isExcluded', 'title','description','doc1','hosp1','pos1','info1',
                       'ans1','doc2','hosp2','pos2','info2','ans2','doc3',
                       'hosp3','pos3','info3','ans3']
     else:
@@ -75,7 +75,7 @@ def clean(filename: str, format: str, onlyOutputFinalFile: bool):
         df[['doc1', 'hosp1', 'pos1']] = df['doc1'].str.split(' ', n=2, expand=True)
         df[['doc2', 'hosp2', 'pos2']] = df['doc2'].str.split(' ', n=2, expand=True)
         df[['doc3', 'hosp3', 'pos3']] = df['doc3'].str.split(' ', n=2, expand=True)
-        df = df[['title','question','doc1','hosp1','pos1','info1','ans1','doc2','hosp2','pos2','info2','ans2','doc3','hosp3','pos3','info3','ans3']]
+        df = df[['title','description','doc1','hosp1','pos1','info1','ans1','doc2','hosp2','pos2','info2','ans2','doc3','hosp3','pos3','info3','ans3']]
         output(suffix="replaced")
 
     exclusion_keywords = [
