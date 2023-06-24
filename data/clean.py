@@ -102,7 +102,6 @@ class WashingMachine:
         df = pd.DataFrame(df['category']).join(df.drop('category', axis=1))
         
         assert df.columns.tolist() == target_column_names
-
         output("replaced")
 
         base = df.index
@@ -186,7 +185,7 @@ def main(args):
     else:
         # Processing all files in current working directory
         filenames = list(filter(
-            lambda filename: filename.endswith('.xlsx') and '_' not in filename, 
+            lambda filename: filename.endswith(f'.{iftype}') and '_' not in filename, 
             os.listdir(os.getcwd())
         ))
 
@@ -221,7 +220,7 @@ def main(args):
         print()
 
     if finalize:
-        Print.warning('> Concatenating all generated *_FINAL.csv files ...')
+        Print.warning(f'> Concatenating all generated *_FINAL.{oftype} files ...')
         filenames = list(filter(
             lambda filename: 'FINAL' in filename, 
             os.listdir(os.getcwd())
