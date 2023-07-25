@@ -161,9 +161,10 @@ class WashingMachine:
             (59, ['_'.join(ifname_no_ext.split()), '注意力问题','如果您看到此问题，请将所有选项（诊断评分、疾病熟悉程度）选择为2。','','','','','','','','','','','','','','','']),
             (79, ['_'.join(ifname_no_ext.split()), '注意力问题','如果您看到此问题，请将所有选项（诊断评分、疾病熟悉程度）选择为1。','','','','','','','','','','','','','','','']),
         ]
-        indices = [ df.index[i] for (i, _) in fake_data ]
         for (i, (loc, fake_ques)) in enumerate(fake_data):
-            df.loc[indices[i]] = fake_ques
+            # insert the fake question at index i into df
+            new_row = pd.DataFrame([fake_ques], columns=df.columns)
+            df = pd.concat([df.iloc[:loc], new_row, df.iloc[loc:]]).reset_index(drop=True)
         suffix = 'FINAL' if self.finalize else 'fake'
         ofname = output(suffix)
         if not self.single_file:
